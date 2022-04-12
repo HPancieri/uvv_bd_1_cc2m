@@ -82,7 +82,7 @@ CREATE TABLE localizacoes_departamento (
 CREATE TABLE departamento (
 	numero_departamento INTEGER NOT NULL, -- PK
 
-	nome_deparamento VARCHAR(15) NOT NULL, -- AK
+	nome_departamento VARCHAR(15) NOT NULL, -- AK
 	cpf_gerente CHAR(11), -- Esse campo deve aceitar valores nulos para possibilitar a inserção de dados sem conflitos com a relação "funcionário".
 	data_inicio_gerente DATE,
 
@@ -158,7 +158,7 @@ COMMENT ON TABLE trabalha_em IS 'Tabela para armazenar quais funcionários traba
 
 -- Tabela "departamento":
 COMMENT ON COLUMN departamento.numero_departamento IS 'Número do departamento. É a PK desta tabela.';
-COMMENT ON COLUMN departamento.nome_deparamento IS 'Nome do departamento. Deve ser único.';
+COMMENT ON COLUMN departamento.nome_departamento IS 'Nome do departamento. Deve ser único.';
 COMMENT ON COLUMN departamento.cpf_gerente IS 'CPF do gerente do departamento. É uma FK para a tabela funcionários.';
 COMMENT ON COLUMN departamento.data_inicio_gerente IS 'Data do início do gerente no departamento.';
 
