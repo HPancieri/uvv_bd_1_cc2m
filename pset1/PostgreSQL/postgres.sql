@@ -180,3 +180,18 @@ COMMENT ON COLUMN funcionario.sexo IS 'Sexo do funcionário. Só aceita valores 
 COMMENT ON COLUMN funcionario.salario IS 'Salário do funcionário. Não pode ser um número negativo.';
 COMMENT ON COLUMN funcionario.cpf_supervisor IS 'CPF do supervisor. Será uma FK para a própria tabela (um auto-relacionamento).';
 COMMENT ON COLUMN funcionario.numero_departamento IS 'Número do departamento do funcionário. Será uma FK para a tabela departamento.';
+
+-- Tabela "localizacoes_departamento":
+COMMENT ON COLUMN localizacoes_departamento.numero_departamento IS 'Número do departamento. Faz parte da PK desta tabela e também é uma FK para a tabela departamento.';
+COMMENT ON COLUMN localizacoes_departmento.local IS 'Localização do departamento. Faz parte da PK desta tabela';
+
+-- Tabela "projeto":
+COMMENT ON COLUMN projeto.numero_projeto IS 'Número do projeto. É a PK desta tabela.';
+COMMENT ON COLUMN projeto.nome_projeto IS 'Nome do projeto. Deve ser único.';
+COMMENT ON COLUMN projeto.local_projeto IS 'Localização do projeto.';
+COMMENT ON COLUMN projeto.numero_departamento IS 'Número do departamento. É uma FK para a tabela departamento.';
+
+-- Tabela "trabalha_em":
+COMMENT ON COLUMN trabalha_em.cpf_funcionario IS 'CPF do funcionário. Faz parte da PK desta tabela e é uma FK para a tabela funcionário.';
+COMMENT ON COLUMN trabalha_em.numero_projeto IS 'Número do projeto. Faz parte da PK desta tabela e é uma FK para a tabela projeto.';
+COMMENT ON COLUMN trabalha_em.horas IS 'Horas trabalhadas pelo funcionário neste projeto.';
