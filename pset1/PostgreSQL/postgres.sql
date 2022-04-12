@@ -42,10 +42,10 @@ CREATE TABLE funcionario (
 	nome_meio CHAR(1),
 	ultimo_nome VARCHAR(15) NOT NULL,
 	data_nascimento DATE,
-	endereco VARCHAR(40), -- Esse VARCHAR, terá tamanho 40, pois existe um valor da etapa de inserção que possui mais do que 30 caracteres.
+	endereco VARCHAR(40), -- Esse VARCHAR terá tamanho 40, pois existe um valor da etapa de inserção que possui mais do que 30 caracteres.
 	sexo CHAR(1),
 	salario DECIMAL(10,2),
-	cpf_supervisor CHAR(11),-- FK -- Esse campo deve poder receber valores nulos, pois será necessário na etapa de implementação.
+	cpf_supervisor CHAR(11),-- FK -- Esse campo deve poder receber valores nulos, pois será necessário na etapa de inserção.
 	numero_departamento INTEGER NOT NULL, -- FK
 
 	-- Chave Primária:
@@ -58,7 +58,7 @@ CREATE TABLE funcionario (
 
 CREATE TABLE dependente (
 	cpf_funcionario CHAR(11) NOT NULL, -- PFK
-	nome_dependente VARCHAR(15) NOT NULL, --PK
+	nome_dependente VARCHAR(15) NOT NULL, -- PK
 
 	sexo CHAR(1),
 	data_nascimento DATE,
@@ -111,7 +111,7 @@ CREATE TABLE trabalha_em (
 	cpf_funcionario CHAR(11) NOT NULL, -- PFK
 	numero_projeto INTEGER NOT NULL, -- PFK
 
-	horas DECIMAL(3,1), -- Esse atributo deve aceitar valores nulos, pois será necessária a inserção de valores nulos.
+	horas DECIMAL(3,1), -- Esse atributo deve aceitar valores nulos, pois será necessário na etapa de inserção.
 
 	-- Chave Primária:
 	PRIMARY KEY (cpf_funcionario, numero_projeto)
@@ -146,15 +146,10 @@ ALTER TABLE trabalha_em ADD FOREIGN KEY (numero_projeto) REFERENCES projeto (num
 -- Adicionar comentários nas tabelas.
 
 COMMENT ON TABLE departamento IS 'Tabela que armazena as informações dos departamentos.';
-
 COMMENT ON TABLE dependente IS 'Tabela que armazena as informações dos dependentes dos funcionários.'
-
 COMMENT ON TABLE funcionario IS 'Tabela que armazena as informações dos funcionários.'
-
 COMMENT ON TABLE localizacoes_departamento IS 'Tabela que armazena as possíveis localizações dos departamentos.'
-
 COMMENT ON TABLE projeto IS 'Tabela que armazena as informações sobre os projetos dos departamentos.'
-
 COMMENT ON TABLE trabalha_em IS 'Tabela para armazenar quais funcionários trabalham em quais projetos.'
 
 ----------------------------------------------------------------
@@ -163,41 +158,25 @@ COMMENT ON TABLE trabalha_em IS 'Tabela para armazenar quais funcionários traba
 
 -- Tabela "departamento":
 COMMENT ON COLUMN departamento.numero_departamento IS 'Número do departamento. É a PK desta tabela.';
-
 COMMENT ON COLUMN departamento.nome_deparamento IS 'Nome do departamento. Deve ser único.';
-
 COMMENT ON COLUMN departamento.cpf_gerente IS 'CPF do gerente do departamento. É uma FK para a tabela funcionários.';
-
 COMMENT ON COLUMN departamento.data_inicio_gerente IS 'Data do início do gerente no departamento.';
 
 -- Tabela "dependente":
 COMMENT ON COLUMN dependente.cpf_funcionario IS 'CPF do funcionário. Faz parte da PK desta tabela e é uma FK para a tabela funcionário.';
-
 COMMENT ON COLUMN dependente.nome_dependente IS 'Nome do dependente. Faz parte da PK desta tabela.';
-
 COMMENT ON COLUMN dependente.sexo IS 'Sexo do dependente. Só aceita os valores "M" ou "F".';
-
 COMMENT ON COLUMN dependente.data_nascimento IS 'Data de nascimento do dependente.';
-
 COMMENT ON COLUMN dependente.parentesco IS 'Descrição do parentesco do dependente com o funcionário.';
 
 -- Tabela "funcionario":
 COMMENT ON COLUMN funcionario.cpf IS 'CPF do funcionário. Será a PK da tabela.';
-
 COMMENT ON COLUMN funcionario.primeiro_nome IS 'Primeiro nome do funcionário.';
-
 COMMENT ON COLUMN funcionario.nome_meio IS 'Inicial do nome do meio.';
-
 COMMENT ON COLUMN funcionario.ultimo_nome IS 'Sobrenome do funcionário.';
-
 COMMENT ON COLUMN funcionario.data_nascimento IS 'Data de nascimento do funcionário.';
-
 COMMENT ON COLUMN funcionario.endereco IS 'Endereço do funcionário.';
-
 COMMENT ON COLUMN funcionario.sexo IS 'Sexo do funcionário. Só aceita valores "M" ou "F".';
-
 COMMENT ON COLUMN funcionario.salario IS 'Salário do funcionário. Não pode ser um número negativo.';
-
 COMMENT ON COLUMN funcionario.cpf_supervisor IS 'CPF do supervisor. Será uma FK para a própria tabela (um auto-relacionamento).';
-
 COMMENT ON COLUMN funcionario.numero_departamento IS 'Número do departamento do funcionário. Será uma FK para a tabela departamento.';
