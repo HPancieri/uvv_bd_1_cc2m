@@ -90,7 +90,7 @@ CREATE TABLE departamento (
 	PRIMARY KEY (numero_departamento),
 
 	-- Chave Única:
-	UNIQUE (nome_deparamento)
+	UNIQUE (nome_departamento)
 );
 
 CREATE TABLE projeto (
