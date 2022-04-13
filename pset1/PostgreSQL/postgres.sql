@@ -258,9 +258,9 @@ INSERT INTO localizacoes_departamento VALUES
 
 -- Tabela "projeto":
 INSERT INTO projeto VALUES
-	(1,  'ProdutoX',         'Santo André', 5),
-	(2,  'ProdutoY',         'Itu',         5),
-	(3,  'ProdutoZ',         'São Paulo',   5),
+	(1,  'ProdutoX',        'Santo André', 5),
+	(2,  'ProdutoY',        'Itu',         5),
+	(3,  'ProdutoZ',        'São Paulo',   5),
 	(10, 'Informatização',  'Mauá',        4),
 	(20, 'Reorganização',   'São Paulo',   1),
 	(30, 'Novosbenefícios', 'Mauá',        4);
