@@ -10,8 +10,10 @@ Professor: Abrantes Araújo Silva Filho
 ---------------------------------------------//---------------------------------------------
 
 -- Criação do Usuário com permissão de criar bancos de dados e fazer login.
+-- A senha do usuário será '123456'.
 CREATE USER hpancieri WITH
-	CREATEDB LOGIN;
+	CREATEDB LOGIN
+	PASSWORD '123456';
 
 -- Criação do banco de dados com os atributos necessários.
 CREATE DATABASE uvv WITH

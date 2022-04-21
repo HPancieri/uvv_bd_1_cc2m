@@ -10,12 +10,13 @@ Professor: Abrantes Araújo Silva Filho
 ---------------------------------------------//---------------------------------------------
 
 -- Criação do Usuário, apenas local.
-CREATE USER hpancieri@localhost;
+-- A senha do usuário será '123456'.
+CREATE USER hpancieri@localhost IDENTITFIED BY '123456';
 
 -- Atribuição de privilégios ao usuário criado para
 -- criação, inserção, atualização, remoção e seleção de dados
 -- somente no banco de dados "elmasri", que será criado.
-GRANT CREATE, INSERT, DROP, UPDATE, SELECT ON elmasri.* TO hpancieri@localhost;
+GRANT ALL PRIVILEGES ON elmasri.* TO hpancieri@localhost;
 
 -- Conexão ao MySQL usando o usuário criado.
 system mysql -u hpancieri;
