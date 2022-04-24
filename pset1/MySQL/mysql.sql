@@ -11,15 +11,7 @@ Professor: Abrantes Araújo Silva Filho
 
 -- Criação do Usuário, apenas local.
 -- A senha do usuário será '123456'.
-CREATE USER hpancieri@localhost IDENTITFIED BY '123456';
-
--- Atribuição de privilégios ao usuário criado para
--- criação, inserção, atualização, remoção e seleção de dados
--- somente no banco de dados "elmasri", que será criado.
-GRANT ALL PRIVILEGES ON elmasri.* TO hpancieri@localhost;
-
--- Conexão ao MySQL usando o usuário criado.
-system mysql -u hpancieri;
+CREATE USER hpancieri@localhost IDENTIFIED BY '123456';
 
 -- Criação do banco de dados.
 -- Como o MySQL não tem suporte a esquemas como o PostgreSQL,
@@ -27,8 +19,17 @@ system mysql -u hpancieri;
 -- e as tabelas serão criadas dentro dele.
 CREATE DATABASE elmasri;
 
+-- Atribuição de privilégios ao usuário criado para
+-- criação, inserção, atualização, remoção e seleção de dados
+-- somente no banco de dados "elmasri".
+GRANT ALL PRIVILEGES ON elmasri.* TO hpancieri@localhost;
+
 -- Conexão oa banco de dados.
 USE elmasri;
+
+/* Diferente do PostgreSQL, o MySQL não permite troca de usuários durante a execução do script,
+então o usuário será criado, os privilégios serão concedidos,
+mas o banco de dados em si será criado pelo usuário root. */
 
 ---------------------------------------------//---------------------------------------------
 
@@ -153,7 +154,7 @@ ALTER TABLE trabalha_em ADD FOREIGN KEY (numero_projeto) REFERENCES projeto (num
 ALTER TABLE departamento COMMENT = 'Tabela que armazena as informações dos departamentos.';
 ALTER TABLE dependente COMMENT = 'Tabela que armazena as informações dos dependentes dos funcionários.';
 ALTER TABLE funcionario COMMENT = 'Tabela que armazena as informações dos funcionários.';
-ALTER TABLE localizacoes_departamento COMMENT = IS 'Tabela que armazena as possíveis localizações dos departamentos.';
+ALTER TABLE localizacoes_departamento COMMENT = 'Tabela que armazena as possíveis localizações dos departamentos.';
 ALTER TABLE projeto COMMENT = 'Tabela que armazena as informações sobre os projetos dos departamentos.';
 ALTER TABLE trabalha_em COMMENT = 'Tabela para armazenar quais funcionários trabalham em quais projetos.';
 
