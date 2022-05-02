@@ -222,7 +222,7 @@ os funcionários diretamente subordinados a este, e assim por diante,
 uma vez que o campo "cpf_supervisor" referencia o cpf de um funcionário.*/
 INSERT INTO funcionario VALUES
 	('88866555576', 'Jorge',    'E', 'Brito',   '1937-11-10', 'Rua do Horto, 35, São Paulo, SP',         'M', 55000.00,  NULL,         1),
-	('33344555587', 'Fernando', 'T', 'Wong',    '1955-12-08', 'Rua da Lapa, 34, São Paulo',              'M', 40000.00, '88866555576', 5),
+	('33344555587', 'Fernando', 'T', 'Wong',    '1955-12-08', 'Rua da Lapa, 34, São Paulo, SP',          'M', 40000.00, '88866555576', 5),
 	('98765432168', 'Jennifer', 'S', 'Sousa',   '1941-06-20', 'Av. Arthur de Lima, 54, Santo André, SP', 'F', 43000.00, '88866555576', 4),
 	('12345678966', 'João',     'B', 'Silva',   '1965-01-09', 'Rua das Flores, 751, São Paulo, SP',      'M', 30000.00, '33344555587', 5),
 	('66688444476', 'Ronaldo',  'K', 'Lima',    '1962-09-15', 'Rua Rebouças, 65, Piracicaba, SP',        'M', 38000.00, '33344555587', 5),
