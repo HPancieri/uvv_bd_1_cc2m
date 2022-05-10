@@ -82,10 +82,10 @@ WHERE
 	f.salario < 35000
 UNION
 SELECT
-	CONCAT(f.primeiro_nome, ' ', f.nome_meio, '. ', f.ultimo_nome),
-	DATE_PART('year', AGE(CURRENT_DATE, f.data_nascimento)),
-	CAST(f.salario AS MONEY),
-	CAST(f.salario * 1.15 AS MONEY)
+	CONCAT(f.primeiro_nome, ' ', f.nome_meio, '. ', f.ultimo_nome) AS "Nome do Funcionário",
+	DATE_PART('year', AGE(CURRENT_DATE, f.data_nascimento)) AS "Idade",
+	CAST(f.salario AS MONEY) AS "Salário Atual",
+	CAST(f.salario * 1.15 AS MONEY) AS "Salário com Reajuste"
 FROM
 	funcionario AS f
 WHERE
@@ -100,27 +100,20 @@ ORDER BY
 -- (em ordem crescente) e por salário dos funcionários (em ordem decrescente).
 
 SELECT
-	gerentes.nome_departamento AS "Nome do Departamento",
-	CONCAT(gerentes.primeiro_nome, ' ', gerentes.nome_meio, '. ', gerentes.ultimo_nome) AS "Nome do Gerente",
-	CONCAT(funcionarios.primeiro_nome, ' ', funcionarios.nome_meio, '. ', funcionarios.ultimo_nome) AS "Nome do Funcionario"
+	d.nome_departamento AS "Nome do Departamento",
+	CONCAT(f2.primeiro_nome, ' ', f2.nome_meio, '. ', f2.ultimo_nome) AS "Nome do Gerente",
+	CONCAT(f1.primeiro_nome, ' ', f1.nome_meio, '. ', f1.ultimo_nome) AS "Nome do Funcionario"
 FROM
-	(
-		departamento
-		INNER JOIN
-		funcionario
-		ON
-			departamento.cpf_gerente = funcionario.cpf
-	) AS gerentes,
-	(
-		departamento
-		INNER JOIN
-		funcionario
-		ON
-			departamento.numero_departamento = funcionario.numero_departamento
-	) AS funcionarios
+	departamento AS d
+	NATURAL JOIN
+	funcionario AS f1
+	INNER JOIN
+	funcionario AS f2
+	ON
+		d.cpf_gerente = f2.cpf
 ORDER BY
-	gerentes.nome_departamento ASC,
-	funcionarios.salario DESC;
+	d.nome_departamento ASC,
+	f1.salario DESC;
 
 ----------------------------------------//----------------------------------------
 
@@ -245,3 +238,125 @@ GROUP BY
 	d.nome_departamento
 ORDER BY
 	d.nome_departamento ASC;
+
+----------------------------------------//----------------------------------------
+
+-- QUESTÃO 11: considerando que o valor pago por hora trabalhada em um projeto
+-- é de 50 reais, prepare um relatório que mostre o nome completo do funcionário, o
+-- nome do projeto e o valor total que o funcionário receberá referente às horas
+-- trabalhadas naquele projeto.
+
+SELECT
+	CONCAT(f.primeiro_nome, ' ', f.nome_meio, '. ', f.ultimo_nome) AS "Nome do Funcionário",
+	p.nome_projeto AS "Nome do Projeto",
+	CAST(50 * te.horas AS MONEY) AS "Valor"
+FROM
+	trabalha_em AS te
+	NATURAL JOIN
+	projeto AS p
+	INNER JOIN
+	funcionario AS f
+	ON
+		te.cpf_funcionario = f.cpf
+ORDER BY
+	"Nome do Funcionário" ASC,
+	"Nome do Projeto" ASC;
+
+----------------------------------------//----------------------------------------
+
+-- QUESTÃO 12: seu chefe está verificando as horas trabalhadas pelos funcionários
+-- nos projetos e percebeu que alguns funcionários, mesmo estando alocadas à algum
+-- projeto, não registraram nenhuma hora trabalhada. Sua tarefa é preparar um
+-- relatório que liste o nome do departamento, o nome do projeto e o nome dos funcionários
+-- que, mesmo estando alocados a algum projeto, não registraram nenhuma hora trabalhada.
+
+SELECT
+	d.nome_departamento AS "Nome do Departamento",
+	p.nome_projeto AS "Nome do Projeto",
+	CONCAT(f.primeiro_nome, ' ', f.nome_meio, '. ', f.ultimo_nome) AS "Nome do Funcionário"
+FROM
+	departamento AS d
+	NATURAL JOIN
+	projeto AS p
+	NATURAL JOIN
+	funcionario AS f
+	INNER JOIN
+	trabalha_em AS te
+	ON
+		te.cpf_funcionario = f.cpf
+WHERE
+	te.horas IS NULL;
+
+----------------------------------------//----------------------------------------
+
+-- QUESTÃO 13: durante o natal deste ano a empresa irá presentear todos os
+-- funcionários e todos os dependentes (sim, a empresa vai dar um presente para cada
+-- funcionário e um presente para cada dependente de cada funcionário) e pediu para
+-- que você preparasse um relatório que listasse o nome completo das pessoas a serem
+-- presenteadas (funcionários e dependentes), o sexo e a idade em anos completos
+-- (para poder comprar um presente adequado). Esse relatório deve estar ordenado
+-- pela idade em anos completos, de forma decrescente.
+
+SELECT
+	CONCAT(f.primeiro_nome, ' ', f.nome_meio, '. ', f.ultimo_nome) AS "Nome",
+	CASE f.sexo
+		WHEN 'F' THEN 'Feminino'
+		WHEN 'M' THEN 'Masculino'
+	END AS "Sexo",
+	DATE_PART('year', AGE(CURRENT_DATE, f.data_nascimento)) AS "Idade"
+FROM
+	funcionario AS f
+UNION
+SELECT
+	dep.nome_dependente AS "Nome",
+	CASE dep.sexo
+		WHEN 'F' THEN 'Feminino'
+		WHEN 'M' THEN 'Masculino'
+	END AS "Sexo",
+	DATE_PART('year', AGE(CURRENT_DATE, dep.data_nascimento)) AS "Idade"
+FROM
+	dependente AS dep
+ORDER BY
+	"Idade" DESC;
+
+----------------------------------------//----------------------------------------
+
+-- QUESTÃO 14: prepare um relatório que exibaquantos funcionários cada departamento tem.
+
+SELECT
+	d.nome_departamento AS "Nome do Departamento",
+	COUNT(f.cpf) AS "Número de Funcionários"
+FROM
+	departamento AS d
+	NATURAL JOIN
+	funcionario AS f
+GROUP BY
+	d.numero_departamento
+ORDER BY
+	"Nome do Departamento" ASC;
+
+----------------------------------------//----------------------------------------
+
+-- QUESTÃO 15: como um funcionário pode estar alocado em mais de um projeto,
+-- prepare um relatório que exiba o nome completo do funcionário, o departamento
+-- desse funcionário e o nome dos projetos em que cada funcionário está alocado.
+-- Atenção: se houver algum funcionário que não está alocado em nenhum projeto,
+-- o nome completo e o departamento também devem aparecer no relatório.
+
+SELECT
+	CONCAT(f.primeiro_nome, ' ', f.nome_meio, '. ', f.ultimo_nome) AS "Nome do Funcionário",
+	d.nome_departamento AS "Nome do Departamento",
+	p.nome_projeto AS "Nome do Projeto"
+FROM
+	departamento AS d
+	NATURAL JOIN
+	projeto AS p
+	NATURAL JOIN
+	trabalha_em AS te
+	RIGHT OUTER JOIN
+	funcionario AS f
+	ON
+		te.cpf_funcionario = f.cpf
+ORDER BY
+	"Nome do Funcionário" ASC,
+	"Nome do Departamento" ASC;
