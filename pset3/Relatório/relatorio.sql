@@ -1,6 +1,6 @@
 /*
 
-Relatórios SQL Recursivos
+Relatório SQL Recursivo
 Autor: Hygor Oliveira Pancieri
 Professor: Abrantes Araújo Silva Filho
 
